@@ -12,6 +12,17 @@ public class Test {
 	
 	Random generator;
 	String userName = "0";
+	String delimiters = " \t,;.?!-:@[](){}_*/";
+	String[] stopWordsArray = {"i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours",
+            "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its",
+            "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that",
+            "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having",
+            "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while",
+            "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before",
+            "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again",
+            "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each",
+            "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than",
+            "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"};
 	
 	  void initialRandomGenerator(String seed) throws NoSuchAlgorithmException {
 	        MessageDigest messageDigest = MessageDigest.getInstance("SHA");
@@ -87,20 +98,105 @@ public class Test {
 		return list.toArray(returnArray);
 	}
 
+	private String[] splitUsingDelimters(String[] arrayToProcess, String delims) {
+		
+		ArrayList<String> list = new ArrayList<String>(10000);
+		
+		for (String p : arrayToProcess) {
+			
+			String[] toList = p.split(delims);
+			
+			for (String q : toList) {
+				list.add(q);
+			}
+			
+		}
+		
+		String[] returnArray = new String[list.size()];
+		return list.toArray(returnArray);
+	}
+	
+	/**
+	 * Makes lowercase, removes whitespace and returns String[]
+	 * @param arrayToProcess
+	 * @return cleaned up String[]
+	 */
+	private String[] cleanUpArray(String[] arrayToProcess) {
+		
+		ArrayList<String> list = new ArrayList<String>(10000);
+		
+		for (String str : arrayToProcess) {
+			str = str.toLowerCase();
+			str = str.replace(" ", "");
+			list.add(str);
+		}
+		
+		String[] returnArray = new String[list.size()];
+		return list.toArray(returnArray);
+	}
+	
+	private String[] removeStopWords(String[] arrayToProcess, String[] stopWords) {
+
+		ArrayList<String> list = new ArrayList<String>(10000);
+
+		for (String str : arrayToProcess) {
+			list.add(str);
+		}
+		
+		Integer[] indexesToRemove = new Integer[list.size()]; 
+		int storeControl = 0; 
+		
+		for (int i = 0; i < list.size(); i++) {
+
+			for (String word : stopWords) {
+
+				if (word == list.get(i)) {
+					indexesToRemove[storeControl] = i; 
+					storeControl++;
+				}
+
+			}
+		}
+		
+	//	for (int i = 0; i < indexesToRemove.length; i++) {
+			 
+			list.remove(indexesToRemove[0]);
+			System.out.println(indexesToRemove[1]);
+			list.remove(0);
+	//	}
+		
+		String[] returnArray = new String[list.size()];
+		return list.toArray(returnArray);
+
+	}
+	
 	public String[] process() throws Exception {
 		String[] ret = new String[20];
 
 		String[] tobeprocessed = fileToArray("input.txt", "UTF-8"); 
 
-		System.out.println(tobeprocessed[108]); // For debugging
-		
 		String[] extractedIndicies = extractMessageIndex(tobeprocessed, 10000);
+			
+		String[] delimitedArray = splitUsingDelimters(extractedIndicies, "([\\t,;.\\?!\\-:@\\[\\]\\(\\){}_\\*\\/])" ); 
 		
-		System.out.println(extractedIndicies[9999]);
+		String[] cleanedArray = cleanUpArray(delimitedArray);
+		
+		String[] removedWords = removeStopWords(cleanedArray, stopWordsArray);
+		
+		String[] wordTest = {"in", "melonhead", "because"};
+		
+		for (String out : wordTest) {
+			System.out.println("Pre remove: " + out);
+		}
+		
+		String[] removedWordsTest = removeStopWords(wordTest, stopWordsArray);
+		
+		for (String out : removedWordsTest) {
+			System.out.println(out);
+		}
+		
+		
 
-		
-		// Get indexes maybe use in loop ? Integer[] indexes =
-		// this.getIndexes();
 
 		// Set value of ret to output before return TO DO
 
