@@ -109,19 +109,19 @@ public class Test {
 	 * @return a String[] with the delimiters removed. 
 	 */
 	private String[] splitUsingDelimters(String[] arrayToProcess, String delims) {
-		
+
 		ArrayList<String> list = new ArrayList<String>(10000);
-		
+
 		for (String p : arrayToProcess) {
-			
+
 			String[] toList = p.split(delims);
-			
+
 			for (String q : toList) {
 				list.add(q);
 			}
-			
+
 		}
-		
+
 		String[] returnArray = new String[list.size()];
 		return list.toArray(returnArray);
 	}
@@ -259,6 +259,10 @@ public class Test {
 		final String[] extractedIndicies = extractMessageIndex(tobeprocessed, 10000);
 			
 		final String[] delimitedArray = splitUsingDelimters(extractedIndicies, "([\\t,;.\\?!\\-:@\\[\\]\\(\\){}_\\*\\/])" ); 
+	    
+		for (String key : delimitedArray) {
+			System.out.println(key);
+		}
 		
 		final String[] cleanedArray = cleanUpArray(delimitedArray);
 		
@@ -280,9 +284,9 @@ public class Test {
 		Test test1 = new Test();
 		String[] var1 = test1.process();
 		
-		for (String key : var1) {
-			System.out.println(key);
-		} 
+//		for (String key : var1) {
+//			System.out.println(key);
+//		} 
 
 	}
 
