@@ -98,6 +98,12 @@ public class Test {
 		return list.toArray(returnArray);
 	}
 
+	/**
+	 * 
+	 * @param arrayToProcess String[] with the elements including delimiters. 
+	 * @param delims a String[] with the desired delimiters to be removed. 
+	 * @return a String[] with the delimiters removed. 
+	 */
 	private String[] splitUsingDelimters(String[] arrayToProcess, String delims) {
 		
 		ArrayList<String> list = new ArrayList<String>(10000);
@@ -135,6 +141,12 @@ public class Test {
 		return list.toArray(returnArray);
 	}
 	
+	/**
+	 * 
+	 * @param arrayToProcess takes String[] array input of words to remove. 
+	 * @param stopWords takes String[] input of words to be removed. 
+	 * @return String[] with stopWords removed
+	 */
 	private String[] removeStopWords(String[] arrayToProcess, String[] stopWords) {
 
 		ArrayList<String> list = new ArrayList<String>(10000);
@@ -149,10 +161,9 @@ public class Test {
 			stopWordsList.add(str);
 		}
 		
-		if (list.removeAll(stopWordsList)) {
-			System.out.println("removeAll returned True");
+		if (list.removeAll(stopWordsList) != true) {
+			System.out.println("removeStopWords Failed");
 		}
-		else System.out.println("removeAll returned False");
 		
 		String[] returnArray = new String[list.size()];
 		return list.toArray(returnArray);
@@ -172,15 +183,13 @@ public class Test {
 		
 		String[] removedWords = removeStopWords(cleanedArray, stopWordsArray);
 		
-		String[] wordTest = {"in", "melonhead", "because"};
+		String[] removedStopWords = removeStopWords(cleanedArray, stopWordsArray);
 		
-		for (String out : wordTest) {
-			System.out.println("Pre remove: " + out);
-		}
 		
-		String[] removedWordsTest = removeStopWords(wordTest, stopWordsArray);
 		
-		for (String out : removedWordsTest) {
+		
+		
+		for (String out : removedStopWords) {
 			System.out.println(out);
 		}
 		
