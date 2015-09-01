@@ -144,6 +144,7 @@ public class Test {
 		}
 		
 		Integer[] indexesToRemove = new Integer[list.size()]; 
+		
 		int storeControl = 0; 
 		
 		for (int i = 0; i < list.size(); i++) {
@@ -158,12 +159,19 @@ public class Test {
 			}
 		}
 		
-	//	for (int i = 0; i < indexesToRemove.length; i++) {
-			 
-			list.remove(indexesToRemove[0]);
-			System.out.println(indexesToRemove[1]);
-			list.remove(0);
-	//	}
+		int removalCounter = 0;
+		
+		for (int i = 0; i < indexesToRemove.length; i++) {
+			
+//			System.out.println(toRemove);
+//			list.remove( (indexesToRemove[i-removalCounter]) );
+			removalCounter++;
+		
+		}
+		
+//		System.out.println(indexesToRemove[1]);
+		Integer removeIndex = indexesToRemove[0];
+		list.remove(removeIndex.intValue());
 		
 		String[] returnArray = new String[list.size()];
 		return list.toArray(returnArray);
