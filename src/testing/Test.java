@@ -138,40 +138,21 @@ public class Test {
 	private String[] removeStopWords(String[] arrayToProcess, String[] stopWords) {
 
 		ArrayList<String> list = new ArrayList<String>(10000);
-
+		
 		for (String str : arrayToProcess) {
 			list.add(str);
 		}
 		
-		Integer[] indexesToRemove = new Integer[list.size()]; 
+		ArrayList<String> stopWordsList = new ArrayList<String>(100);
 		
-		int storeControl = 0; 
-		
-		for (int i = 0; i < list.size(); i++) {
-
-			for (String word : stopWords) {
-
-				if (word == list.get(i)) {
-					indexesToRemove[storeControl] = i; 
-					storeControl++;
-				}
-
-			}
+		for (String str : stopWords) {
+			stopWordsList.add(str);
 		}
 		
-		int removalCounter = 0;
-		
-		for (int i = 0; i < indexesToRemove.length; i++) {
-			
-//			System.out.println(toRemove);
-//			list.remove( (indexesToRemove[i-removalCounter]) );
-			removalCounter++;
-		
+		if (list.removeAll(stopWordsList)) {
+			System.out.println("removeAll returned True");
 		}
-		
-//		System.out.println(indexesToRemove[1]);
-		Integer removeIndex = indexesToRemove[0];
-		list.remove(removeIndex.intValue());
+		else System.out.println("removeAll returned False");
 		
 		String[] returnArray = new String[list.size()];
 		return list.toArray(returnArray);
