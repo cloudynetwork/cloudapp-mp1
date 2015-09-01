@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -197,13 +198,37 @@ public class Test {
 	
 	private Map<String, Integer> sortMap(Map<String, Integer> m) {
 		
-		Map<String, Integer> sort = new TreeMap<String, Integer>();
+		Map<String, Integer> sort = new TreeMap<String, Integer>(new MapComparator(m));
 		sort.putAll(m);
 		
 		System.out.println(sort.size() + " distinct words:");
 		System.out.println(sort);
 		return sort; 
 	}
+	
+	/**
+	 * 
+	 * @author 
+	 *
+	 */
+    class MapComparator implements Comparator<String> {
+        
+        Map<String,Integer> m;
+     
+        public MapComparator(Map<String, Integer> m) {
+            this.m = m;
+        }
+     
+        public int compare(String a, String b) {
+            Integer vala = m.get(a);
+            Integer valb = m.get(b);
+            int result = valb.compareTo(vala);
+            if(result == 0)
+                return a.compareTo(b);
+            else
+                return result;
+        }
+    }
 
 	public String[] process() throws Exception {
 		String[] ret = new String[20];
@@ -218,7 +243,7 @@ public class Test {
 		
 		final String[] removedWords = removeStopWords(cleanedArray, stopWordsArray);
 		
-		String[] testArray = {"valley","gods","valley","rainbow","rainbow","man","rainbow"};
+		String[] testArray = {"valley","gods","valley","vb","vb","rainbow","rainbow","man","rainbow"};
 		
 		countOccurrances(testArray);
 		
