@@ -5,8 +5,11 @@ import java.io.FileNotFoundException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Test {
 	
@@ -150,48 +153,81 @@ public class Test {
 	private String[] removeStopWords(String[] arrayToProcess, String[] stopWords) {
 
 		ArrayList<String> list = new ArrayList<String>(10000);
-		
+
 		for (String str : arrayToProcess) {
 			list.add(str);
 		}
-		
+
 		ArrayList<String> stopWordsList = new ArrayList<String>(100);
-		
+
 		for (String str : stopWords) {
 			stopWordsList.add(str);
 		}
-		
+
 		if (list.removeAll(stopWordsList) != true) {
 			System.out.println("removeStopWords Failed");
 		}
-		
+
 		String[] returnArray = new String[list.size()];
 		return list.toArray(returnArray);
 
 	}
 	
+	private Map<String, Integer> countOccurrances(String[] arrayToCount) {
+
+		Map<String, Integer> m = new HashMap<String, Integer>();
+
+		for (String a : arrayToCount) {
+			Integer freq = m.get(a);
+			m.put(a, (freq == null ? 1 : freq + 1));
+
+		}
+
+		System.out.println(m.size() + " distinct words:");
+		System.out.println(m);
+		
+		m = sortMap(m);
+
+//		System.out.println(m.size() + " distinct words:");
+//		System.out.println(m);
+		
+		return m;
+
+	}
+	
+	private Map<String, Integer> sortMap(Map<String, Integer> m) {
+		
+		Map<String, Integer> sort = new TreeMap<String, Integer>();
+		sort.putAll(m);
+		
+		System.out.println(sort.size() + " distinct words:");
+		System.out.println(sort);
+		return sort; 
+	}
+
 	public String[] process() throws Exception {
 		String[] ret = new String[20];
 
-		String[] tobeprocessed = fileToArray("input.txt", "UTF-8"); 
+		final String[] tobeprocessed = fileToArray("input.txt", "UTF-8"); 
 
-		String[] extractedIndicies = extractMessageIndex(tobeprocessed, 10000);
+		final String[] extractedIndicies = extractMessageIndex(tobeprocessed, 10000);
 			
-		String[] delimitedArray = splitUsingDelimters(extractedIndicies, "([\\t,;.\\?!\\-:@\\[\\]\\(\\){}_\\*\\/])" ); 
+		final String[] delimitedArray = splitUsingDelimters(extractedIndicies, "([\\t,;.\\?!\\-:@\\[\\]\\(\\){}_\\*\\/])" ); 
 		
-		String[] cleanedArray = cleanUpArray(delimitedArray);
+		final String[] cleanedArray = cleanUpArray(delimitedArray);
 		
-		String[] removedWords = removeStopWords(cleanedArray, stopWordsArray);
+		final String[] removedWords = removeStopWords(cleanedArray, stopWordsArray);
 		
-		String[] removedStopWords = removeStopWords(cleanedArray, stopWordsArray);
+		String[] testArray = {"valley","gods","valley","rainbow","rainbow","man","rainbow"};
+		
+		countOccurrances(testArray);
 		
 		
 		
 		
-		
-		for (String out : removedStopWords) {
-			System.out.println(out);
-		}
+//		for (String out : removedStopWords) {
+//			System.out.println(out);
+//		}
 		
 		
 
