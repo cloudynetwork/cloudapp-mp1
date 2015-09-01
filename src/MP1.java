@@ -1,9 +1,8 @@
-package mp1;
-import java.io.File;
-import java.lang.reflect.Array;
+
+import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.*;
+import java.util.Random;
 
 public class MP1 {
     Random generator;
@@ -53,8 +52,31 @@ public class MP1 {
     public String[] process() throws Exception {
         String[] ret = new String[20];
        
-        //TODO
+       File file = new File("input.txt");
+       try {
+    	   FileReader fr = new FileReader(file); 
+    	   BufferedReader br = new BufferedReader(fr);
+    	   
+    	   String line;
+           
+			while ((line = br.readLine()) != null)
+				;
+			{
+				System.out.println(line);
+			}
+    	   
+    	   System.out.println(line);
+       
+       } catch (FileNotFoundException e) {
+    	   System.out.println("File not found: " + file.toString());
+       } catch (IOException e) {
+    	   System.out.println("Unable to read file: " + file.toString());
+       }
+      
+       // Get indexes maybe use in loop ? Integer[] indexes = this.getIndexes();
 
+        // Set value of ret to output before return TO DO 
+        
         return ret;
     }
 
