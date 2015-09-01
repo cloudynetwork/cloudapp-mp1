@@ -184,8 +184,8 @@ public class Test {
 
 		}
 
-		System.out.println(m.size() + " distinct words:");
-		System.out.println(m);
+//		System.out.println(m.size() + " distinct words:");
+//		System.out.println(m);
 		
 		m = sortMap(m);
 
@@ -201,8 +201,8 @@ public class Test {
 		Map<String, Integer> sort = new TreeMap<String, Integer>(new MapComparator(m));
 		sort.putAll(m);
 		
-		System.out.println(sort.size() + " distinct words:");
-		System.out.println(sort);
+//		System.out.println(sort.size() + " distinct words:");
+//		System.out.println(sort);
 		return sort; 
 	}
 	
@@ -211,24 +211,45 @@ public class Test {
 	 * @author 
 	 *
 	 */
-    class MapComparator implements Comparator<String> {
-        
-        Map<String,Integer> m;
-     
-        public MapComparator(Map<String, Integer> m) {
-            this.m = m;
-        }
-     
-        public int compare(String a, String b) {
-            Integer vala = m.get(a);
-            Integer valb = m.get(b);
-            int result = valb.compareTo(vala);
-            if(result == 0)
-                return a.compareTo(b);
-            else
-                return result;
-        }
-    }
+	class MapComparator implements Comparator<String> {
+
+		Map<String, Integer> m;
+
+		public MapComparator(Map<String, Integer> m) {
+			this.m = m;
+		}
+
+		public int compare(String a, String b) {
+			
+			Integer vala = m.get(a);
+			Integer valb = m.get(b);
+			
+			int result = valb.compareTo(vala);
+			
+			if (result == 0)
+				return a.compareTo(b);
+			else
+				return result;
+		}
+	}
+	
+	private String[] finalProcess(Map<String, Integer> inputMap) {
+
+		ArrayList<String> outputList = new ArrayList<String>(100);
+
+		for (String key : inputMap.keySet()) {
+//			System.out.println(key);
+			outputList.add(key);
+		}
+
+		String[] outputArray = new String[20];
+
+		for (int i = 0; i < 20; i++) {
+			outputArray[i] = outputList.get(i);
+		}
+
+		return outputArray;
+	}
 
 	public String[] process() throws Exception {
 		String[] ret = new String[20];
@@ -243,31 +264,25 @@ public class Test {
 		
 		final String[] removedWords = removeStopWords(cleanedArray, stopWordsArray);
 		
-		String[] testArray = {"valley","gods","valley","vb","vb","rainbow","rainbow","man","rainbow"};
+//		String[] testArray = {"valley","help","terrible","google","indium","varium","petrol","diesel","engine","iridium","elirium","gods","pest","famine","war","death","proof","darkness","valley","vb","vb","rainbow","rainbow","man","rainbow","valley","gods","valley","vb","vb","rainbow","rainbow","man","rainbow","valley","gods","valley","vb","vb","rainbow","rainbow","man","rainbow","valley","gods","valley","vb","vb","rainbow","rainbow","man","rainbow"};
 		
-		countOccurrances(testArray);
+		final Map<String, Integer> sortedMap = countOccurrances(removedWords);
 		
-		
-		
-		
-//		for (String out : removedStopWords) {
-//			System.out.println(out);
-//		}
-		
-		
-
+		final String[] returnArray = finalProcess(sortedMap);
 
 		// Set value of ret to output before return TO DO
 
-		return ret;
+		return returnArray;
 	}
 	
-	
-
 	public static void main(String[] args) throws Exception {
 
 		Test test1 = new Test();
 		String[] var1 = test1.process();
+		
+		for (String key : var1) {
+			System.out.println(key);
+		} 
 
 	}
 
