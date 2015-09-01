@@ -4,13 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Test {
 	
@@ -115,12 +109,23 @@ public class Test {
 		for (String p : arrayToProcess) {
 
 			String[] toList = p.split(delims);
+			// Appears that default split does not remove leading trailing empty space
 
 			for (String q : toList) {
 				list.add(q);
 			}
 
 		}
+		
+		//Iterate through the ListArray and removes null and empty. 
+		Iterator<String> i = list.iterator();
+		while (i.hasNext()) {
+			String s = i.next();
+			if (s == null || s.isEmpty()) {
+				i.remove();
+			}
+		}
+		
 
 		String[] returnArray = new String[list.size()];
 		return list.toArray(returnArray);
@@ -258,11 +263,11 @@ public class Test {
 
 		final String[] extractedIndicies = extractMessageIndex(tobeprocessed, 10000);
 			
-		final String[] delimitedArray = splitUsingDelimters(extractedIndicies, "([\\t,;.\\?!\\-:@\\[\\]\\(\\){}_\\*\\/])" ); 
+		final String[] delimitedArray = splitUsingDelimters(extractedIndicies, "([ \\t,;.?!\\-:@\\[\\](){}_*/])" ); 
 	    
-		for (String key : delimitedArray) {
-			System.out.println(key);
-		}
+//		for (String key : delimitedArray) {
+//			System.out.println(key);
+//		}
 		
 		final String[] cleanedArray = cleanUpArray(delimitedArray);
 		
@@ -284,9 +289,9 @@ public class Test {
 		Test test1 = new Test();
 		String[] var1 = test1.process();
 		
-//		for (String key : var1) {
-//			System.out.println(key);
-//		} 
+		for (String key : var1) {
+			System.out.println(key);
+		} 
 
 	}
 
