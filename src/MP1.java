@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -273,27 +270,6 @@ public class MP1 {
     public String[] process() throws Exception {
         String[] ret = new String[20];
        
-       File file = new File("input.txt");
-       try {
-    	   FileReader fr = new FileReader(file); 
-    	   BufferedReader br = new BufferedReader(fr);
-    	   
-    	   String line;
-           
-			while ((line = br.readLine()) != null)
-				;
-			{
-				System.out.println(line);
-			}
-    	   
-    	   System.out.println(line);
-       
-       } catch (FileNotFoundException e) {
-    	   System.out.println("File not found: " + file.toString());
-       } catch (IOException e) {
-    	   System.out.println("Unable to read file: " + file.toString());
-       }
-      
        final String[] tobeprocessed = fileToArray("input.txt", "UTF-8"); 
 
 		final String[] extractedIndicies = extractMessageIndex(tobeprocessed, 10000);
